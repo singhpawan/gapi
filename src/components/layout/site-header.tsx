@@ -51,66 +51,69 @@ export function SiteHeader() {
           />
         </Link>
 
-        <div className="ml-auto hidden items-center gap-6 xl:flex">
-          <nav className="flex items-center gap-1.5" aria-label="Main">
-            {primaryNav.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition duration-300",
-                    active ? "text-ink" : "text-ink-muted hover:text-ink",
-                  )}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-
-            <div className="relative" ref={moreRef}>
-              <button
-                type="button"
+        <nav
+          className="hidden min-w-0 flex-1 items-center justify-center gap-1.5 xl:flex"
+          aria-label="Main"
+        >
+          {primaryNav.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
                 className={cn(
                   "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition duration-300",
-                  moreActive || moreOpen ? "text-ink" : "text-ink-muted hover:text-ink",
+                  active ? "text-ink" : "text-ink-muted hover:text-ink",
                 )}
-                aria-expanded={moreOpen}
-                aria-haspopup="menu"
-                onClick={() => setMoreOpen((v) => !v)}
               >
-                More
-              </button>
-              {moreOpen ? (
-                <div
-                  role="menu"
-                  className="absolute right-0 top-[calc(100%+0.5rem)] min-w-[11rem] animate-fade-in rounded-2xl border border-line bg-surface-elevated p-1.5 shadow-[var(--shadow-soft)]"
-                >
-                  {moreNav.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      role="menuitem"
-                      className={cn(
-                        "block rounded-xl px-3.5 py-2.5 text-sm transition",
-                        pathname === link.href
-                          ? "bg-white/5 text-ink"
-                          : "text-ink-muted hover:bg-white/5 hover:text-ink",
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              ) : null}
-            </div>
-          </nav>
+                {link.label}
+              </Link>
+            );
+          })}
 
+          <div className="relative" ref={moreRef}>
+            <button
+              type="button"
+              className={cn(
+                "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition duration-300",
+                moreActive || moreOpen ? "text-ink" : "text-ink-muted hover:text-ink",
+              )}
+              aria-expanded={moreOpen}
+              aria-haspopup="menu"
+              onClick={() => setMoreOpen((v) => !v)}
+            >
+              More
+            </button>
+            {moreOpen ? (
+              <div
+                role="menu"
+                className="absolute left-1/2 top-[calc(100%+0.5rem)] min-w-[11rem] -translate-x-1/2 animate-fade-in rounded-2xl border border-line bg-surface-elevated p-1.5 shadow-[var(--shadow-soft)]"
+              >
+                {moreNav.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    role="menuitem"
+                    className={cn(
+                      "block rounded-xl px-3.5 py-2.5 text-sm transition",
+                      pathname === link.href
+                        ? "bg-white/5 text-ink"
+                        : "text-ink-muted hover:bg-white/5 hover:text-ink",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </nav>
+
+        <div className="hidden shrink-0 xl:block">
           <ButtonLink
             href="/memberships"
             variant="primary"
-            className="!shrink-0 !whitespace-nowrap !px-4 !py-2.5"
+            className="!whitespace-nowrap !px-4 !py-2.5"
           >
             Become a Member
           </ButtonLink>
