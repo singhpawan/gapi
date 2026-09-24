@@ -34,82 +34,91 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-void/80 backdrop-blur-xl">
-      <Container className="flex h-[var(--header-h)] items-center justify-between gap-4">
-        <Link href="/" className="flex min-w-0 items-center gap-3">
+      <div className="mx-auto flex h-[var(--header-h)] w-full max-w-7xl items-center gap-4 px-5 sm:px-8 lg:gap-6">
+        <Link
+          href="/"
+          aria-label={site.name}
+          className="relative z-10 block shrink-0"
+          style={{ width: 240, height: 36 }}
+        >
           <Image
-            src="/images/brand/gapi-logo.png"
-            alt={`${site.shortName} logo`}
-            width={120}
-            height={24}
-            className="h-7 w-auto brightness-0 invert"
+            src="/images/brand/gapi-wordmark.png"
+            alt={site.name}
+            fill
+            className="object-contain object-left"
+            sizes="240px"
             priority
           />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
-          {primaryNav.map((link) => {
-            const active = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
+        <div className="ml-auto hidden items-center gap-6 xl:flex">
+          <nav className="flex items-center gap-1.5" aria-label="Main">
+            {primaryNav.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition duration-300",
+                    active ? "text-ink" : "text-ink-muted hover:text-ink",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
+            <div className="relative" ref={moreRef}>
+              <button
+                type="button"
                 className={cn(
-                  "rounded-full px-3.5 py-2 text-sm font-medium transition duration-300",
-                  active ? "text-ink" : "text-ink-muted hover:text-ink",
+                  "whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition duration-300",
+                  moreActive || moreOpen ? "text-ink" : "text-ink-muted hover:text-ink",
                 )}
+                aria-expanded={moreOpen}
+                aria-haspopup="menu"
+                onClick={() => setMoreOpen((v) => !v)}
               >
-                {link.label}
-              </Link>
-            );
-          })}
+                More
+              </button>
+              {moreOpen ? (
+                <div
+                  role="menu"
+                  className="absolute right-0 top-[calc(100%+0.5rem)] min-w-[11rem] animate-fade-in rounded-2xl border border-line bg-surface-elevated p-1.5 shadow-[var(--shadow-soft)]"
+                >
+                  {moreNav.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      role="menuitem"
+                      className={cn(
+                        "block rounded-xl px-3.5 py-2.5 text-sm transition",
+                        pathname === link.href
+                          ? "bg-white/5 text-ink"
+                          : "text-ink-muted hover:bg-white/5 hover:text-ink",
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </nav>
 
-          <div className="relative" ref={moreRef}>
-            <button
-              type="button"
-              className={cn(
-                "rounded-full px-3.5 py-2 text-sm font-medium transition duration-300",
-                moreActive || moreOpen ? "text-ink" : "text-ink-muted hover:text-ink",
-              )}
-              aria-expanded={moreOpen}
-              aria-haspopup="menu"
-              onClick={() => setMoreOpen((v) => !v)}
-            >
-              More
-            </button>
-            {moreOpen ? (
-              <div
-                role="menu"
-                className="absolute right-0 top-[calc(100%+0.5rem)] min-w-[11rem] animate-fade-in rounded-2xl border border-line bg-surface-elevated p-1.5 shadow-[var(--shadow-soft)]"
-              >
-                {moreNav.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    role="menuitem"
-                    className={cn(
-                      "block rounded-xl px-3.5 py-2.5 text-sm transition",
-                      pathname === link.href
-                        ? "bg-white/5 text-ink"
-                        : "text-ink-muted hover:bg-white/5 hover:text-ink",
-                    )}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </nav>
-
-        <div className="hidden items-center gap-2 lg:flex">
-          <ButtonLink href="/memberships" variant="primary" className="!px-5 !py-2.5">
+          <ButtonLink
+            href="/memberships"
+            variant="primary"
+            className="!shrink-0 !whitespace-nowrap !px-4 !py-2.5"
+          >
             Become a Member
           </ButtonLink>
         </div>
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line lg:hidden"
+          className="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line xl:hidden"
           aria-expanded={open}
           aria-label="Toggle menu"
           onClick={() => setOpen((v) => !v)}
@@ -135,10 +144,10 @@ export function SiteHeader() {
             />
           </div>
         </button>
-      </Container>
+      </div>
 
       {open ? (
-        <div className="animate-fade-in border-t border-line bg-void lg:hidden">
+        <div className="animate-fade-in border-t border-line bg-void xl:hidden">
           <Container className="flex flex-col gap-1 py-4">
             {[...primaryNav, ...moreNav].map((link) => (
               <Link

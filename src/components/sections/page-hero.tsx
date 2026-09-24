@@ -6,18 +6,29 @@ export function PageHero({
   title,
   description,
   imageSrc,
+  imagePosition = "center",
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   imageSrc?: string;
+  /** CSS object-position value, e.g. "center top" or "center 20%" */
+  imagePosition?: string;
 }) {
   if (imageSrc) {
     return (
       <section className="relative isolate overflow-hidden">
         <div className="absolute inset-0">
-          <Image src={imageSrc} alt="" fill className="object-cover" sizes="100vw" priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/70 to-void/40" />
+          <Image
+            src={imageSrc}
+            alt=""
+            fill
+            className="object-cover"
+            style={{ objectPosition: imagePosition }}
+            sizes="100vw"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-void via-void/65 to-void/35" />
         </div>
         <Container className="relative py-24 sm:py-32">
           {eyebrow ? (

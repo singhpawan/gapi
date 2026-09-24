@@ -8,13 +8,20 @@ export function SiteFooter() {
     <footer className="border-t border-line bg-surface">
       <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
-          <Image
-            src="/images/brand/gapi-logo.png"
-            alt={`${site.shortName} logo`}
-            width={140}
-            height={28}
-            className="mb-5 h-7 w-auto brightness-0 invert"
-          />
+          <Link
+            href="/"
+            aria-label={site.name}
+            className="relative mb-5 block"
+            style={{ width: 260, height: 40 }}
+          >
+            <Image
+              src="/images/brand/gapi-wordmark.png"
+              alt={site.name}
+              fill
+              className="object-contain object-left"
+              sizes="260px"
+            />
+          </Link>
           <p className="max-w-xs text-sm leading-relaxed text-ink-muted">{site.tagline}</p>
         </div>
 

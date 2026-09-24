@@ -21,6 +21,7 @@ export default function EventsPage() {
         title="Gather. Learn. Celebrate."
         description="Professional development, cultural celebrations, and community service across Georgia."
         imageSrc="/images/gallery/gapi-2.jpg"
+        imagePosition="center 22%"
       />
 
       <Section>

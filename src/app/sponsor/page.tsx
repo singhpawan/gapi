@@ -21,21 +21,28 @@ export default function SponsorPage() {
 
       <Section>
         <Container>
-          <SectionHeading title="Current partners" />
+          <SectionHeading
+            title="Current partners"
+            description={`${sponsors.length} organizations standing with GAPI.`}
+          />
           <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {sponsors.map((sponsor) => (
-              <div
+              <a
                 key={sponsor.name}
-                className="flex h-28 items-center justify-center rounded-[var(--radius)] border border-line bg-surface px-4"
+                href={sponsor.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Visit ${sponsor.name} website`}
+                className="flex h-28 flex-col items-center justify-center rounded-[var(--radius)] border border-line bg-white px-4 transition hover:border-rausch/40"
               >
                 <Image
                   src={sponsor.logo}
                   alt={`${sponsor.name} logo`}
-                  width={150}
-                  height={56}
-                  className="max-h-12 w-auto object-contain brightness-0 invert opacity-75"
+                  width={160}
+                  height={64}
+                  className="max-h-12 w-auto object-contain"
                 />
-              </div>
+              </a>
             ))}
           </div>
           <div className="mt-14 rounded-[var(--radius)] border border-line bg-surface p-8 sm:p-12">
